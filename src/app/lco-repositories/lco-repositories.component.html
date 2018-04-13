@@ -1,0 +1,36 @@
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+        aria-valuemax="100"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Lang</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let repo of repositories">
+          <td>
+            <a [href]='repo.html_url' target="_blank">{{repo.name}}</a>
+          </td>
+          <td>
+            {{repo.description}}
+          </td>
+          <td>
+            {{repo.language}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
