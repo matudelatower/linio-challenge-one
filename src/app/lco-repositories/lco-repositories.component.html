@@ -1,36 +1,41 @@
-<div class="row" *ngIf="loading">
-  <div class="col-12">
-    <div class="progress">
-      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-        aria-valuemax="100"></div>
-    </div>
-  </div>
+<div class="row">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Type user to view repos" [(ngModel)]="user" (keydown.enter)="search()">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="search()">
+    <mat-icon>search</mat-icon>
+    Search
+  </button>
 </div>
 
-<div class="row" *ngIf="!loading">
-  <div class="col-12">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Lang</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let repo of repositories">
-          <td>
-            <a [href]='repo.html_url' target="_blank">{{repo.name}}</a>
-          </td>
-          <td>
-            {{repo.description}}
-          </td>
-          <td>
-            {{repo.language}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="datatable-container">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <table class="mat-table" *ngIf="repositories.length > 0">
+    <thead>
+      <tr class="mat-header-row">
+        <th class="mat-header-cell">Name</th>
+        <th class="mat-header-cell">Description</th>
+        <th class="mat-header-cell">Language</th>
+        <th class="mat-header-cell">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="mat-row" *ngFor="let repo of repositories">
+        <td class="mat-cell">
+          <a [href]='repo.html_url' target="_blank">{{repo.name}}</a>
+        </td>
+        <td class="mat-cell">{{repo.description}}</td>
+        <td class="mat-cell">{{repo.language}}</td>
+        <td class="mat-cell">
+          <a mat-raised-button [routerLink]="['/issues', user, repo.name]" routerLinkActive="active" *ngIf="repo.has_issues">
+            <mat-icon aria-label="view issue">visibility</mat-icon>
+            View issues
+          </a>
+        </td>
+      </tr>
 
+    </tbody>
+  </table>
+  <span>{{noRepoText}}</span>
 </div>

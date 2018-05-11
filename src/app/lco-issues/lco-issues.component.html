@@ -1,0 +1,29 @@
+<div>
+  <a [routerLink]="['/home', user]" mat-icon-button>
+    <mat-icon aria-label="back">keyboard_backspace</mat-icon>
+  </a>
+  <h1>{{title}} issues</h1>
+</div>
+
+<div class="datatable-container">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <table class="mat-table" *ngIf="issues.length > 0">
+    <thead>
+      <tr class="mat-header-row">
+        <th class="mat-header-cell">Title</th>
+        <th class="mat-header-cell">State</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="mat-row" *ngFor="let issue of issues">
+        <td class="mat-cell">
+          <a [href]='issue.html_url' target="_blank">{{issue.title}}</a>
+        </td>
+        <td class="mat-cell">
+          <mat-icon aria-label="open" *ngIf="issue.state == 'open'">lock_open</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <span>{{noIssueText}}</span>
+</div>
